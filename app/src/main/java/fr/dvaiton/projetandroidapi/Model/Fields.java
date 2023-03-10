@@ -4,28 +4,23 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+
+
 public class Fields {
 
     @SerializedName("reg_name")
-    @Expose
     private String regName;
     @SerializedName("id")
-    @Expose
     private String id;
     @SerializedName("dep_name")
-    @Expose
     private String depName;
     @SerializedName("geo_point_2d")
-    @Expose
     private List<Double> geoPoint2d;
     @SerializedName("geo_shape")
-    @Expose
     private GeoShape geoShape;
     @SerializedName("commune")
-    @Expose
     private String commune;
     @SerializedName("nature")
-    @Expose
     private String nature;
 
     public String getRegName() {

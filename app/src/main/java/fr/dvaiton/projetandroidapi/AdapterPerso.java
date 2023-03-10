@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import fr.dvaiton.projetandroidapi.Model.PointDEau;
+
 public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder>{
 
     Context context;
@@ -21,8 +23,10 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
 
 
 
-    public AdapterPerso(Context context) {
+
+    public AdapterPerso(Context context , ArrayList<PointDEau> pointDEauArrayList) {
         this.context = context;
+        this.pointDEauArrayList = pointDEauArrayList;
     }
 
     @NonNull
@@ -34,9 +38,9 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.Nom.setText("Nom");
-        holder.Type.setText("Type");
-        holder.Commune.setText("Commune");
+        holder.Nom.setText(pointDEauArrayList.get(position).getFields().getId());
+        holder.Type.setText(pointDEauArrayList.get(position).getFields().getNature());
+        holder.Commune.setText(pointDEauArrayList.get(position).getFields().getCommune());
     }
 
     @Override

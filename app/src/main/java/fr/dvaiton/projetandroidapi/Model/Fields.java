@@ -8,6 +8,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Fields {
 
+
+    @SerializedName("code_insee")
+    private String codeInsee;
+
     @SerializedName("reg_name")
     private String regName;
     @SerializedName("id")
@@ -77,6 +81,14 @@ public class Fields {
 
     public void setNature(String nature) {
         this.nature = nature;
+    }
+
+    public String getCodeInsee() {
+        return codeInsee;
+    }
+
+    public void setCodeInsee(String codeInsee) {
+        this.codeInsee = codeInsee;
     }
 
 

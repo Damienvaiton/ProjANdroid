@@ -29,4 +29,13 @@ public class GeoShape {
         this.type = type;
     }
 
+    public Double getLatitude(){
+        return coordinates.get(0);
+    }
+
+    public Double getLongitude(){
+        return coordinates.get(1);
+    }
+
+
 }

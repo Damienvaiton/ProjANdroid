@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.dvaiton.projetandroidapi.MainActivity;
+import fr.dvaiton.projetandroidapi.MapsActivity;
 import fr.dvaiton.projetandroidapi.Model.PointDEau;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,11 +26,12 @@ public MainActivityController (){
         return apimanager;
     }
     public void loadEau(PointDEauDataManagerCallback callback){
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < MainActivity.nbVaribale; i++) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("dataset", "hydrographie-points-deau-en-france");
-        queryMap.put("rows", "100");
-        queryMap.put("start", String.valueOf(i * 100));
+        queryMap.put("rows", MainActivity.nbVaribale+"");
+        int start = i * MainActivity.nbVaribale;
+        queryMap.put("start", String.valueOf(start));
 
     apimanager.getEauService().getPointDEau().enqueue(new Callback<PointDEau>() {
         @Override

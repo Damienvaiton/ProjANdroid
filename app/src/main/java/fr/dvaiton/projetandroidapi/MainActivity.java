@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -18,6 +20,10 @@ import fr.dvaiton.projetandroidapi.Model.PointDEau;
 
 public class MainActivity extends AppCompatActivity implements PointDEauDataManagerCallback {
 
+
+    public static int nbVaribale = 100;
+
+    Button button;
 
     ArrayList<PointDEau> listPoints;
 
@@ -40,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         listPoints = new ArrayList<>();
         adapter = new AdapterPerso(this,listPoints);
         recyclerView = findViewById(R.id.Vuedatas);
+        button = findViewById(R.id.CarteButton);
 
 
 
@@ -56,6 +63,15 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
 
 
+
+        button.setOnClickListener(v -> {
+            Intent maps = new Intent(MainActivity.this,MapsActivity.class);
+            startActivity(maps);
+
+
+
+        }
+        );
 
 
 
@@ -81,4 +97,6 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
     public void getTimeResponseError(String error) {
 
     }
+
+
 }

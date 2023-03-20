@@ -39,10 +39,10 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Log.e("test","passageonblind");
         holder.Nom.setText(pointDEauArrayList.get(position).getRecords().get(position).getFields().getCommune());
         holder.Type.setText(pointDEauArrayList.get(position).getRecords().get(position).getFields().getDepName());
         holder.Commune.setText(pointDEauArrayList.get(position).getRecords().get(position).getFields().getNature());
+        Log.e("de",""+pointDEauArrayList.size());
     }
 
     @Override
@@ -79,11 +79,15 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
             androidx.appcompat.app.AlertDialog.Builder pop = new AlertDialog.Builder(v.getContext());
             pop.setTitle("Info point" );
 
-            pop.setMessage("Nom : " + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getId()
-                    + "\n Commmune"+pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getCommune()
-                    + " \n Departement : " + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getDepName()
-                    + "\n Type de point d'eau" + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getNature())
-            ;
+            pop.setMessage("Code INSEE: " + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getCodeInsee()
+                    + "\n ID: " + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getId()
+                    + "\n Commmune: "+pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getCommune()
+                    + "\n Departement: " + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getDepName()
+                    + "\n Type de point d'eau: " + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getNature()
+                    + "\n Latitude: " + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getGeoShape().getLatitude()
+                    + "\n Longitude: " + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getGeoShape().getLongitude())
+                    ;
+
 
             pop.show();
 

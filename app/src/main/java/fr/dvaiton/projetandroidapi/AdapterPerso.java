@@ -1,12 +1,14 @@
 package fr.dvaiton.projetandroidapi;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -37,15 +39,15 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
-        holder.Nom.setText(pointDEauArrayList.get(position).getFields().getId());
-        holder.Type.setText(pointDEauArrayList.get(position).getFields().getNature());
-        holder.Commune.setText(pointDEauArrayList.get(position).getFields().getCommune());
+        Log.e("test","passageonblind");
+        holder.Nom.setText(pointDEauArrayList.get(position).getRecords().get(position).getFields().getCommune());
+        holder.Type.setText(pointDEauArrayList.get(position).getRecords().get(position).getFields().getDepName());
+        holder.Commune.setText(pointDEauArrayList.get(position).getRecords().get(position).getFields().getNature());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return pointDEauArrayList.size();
     }
 
 
@@ -55,7 +57,7 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
 
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView Nom,Type,Commune;
 
@@ -65,10 +67,34 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
             Nom = itemView.findViewById(R.id.nomPoint);
             Type = itemView.findViewById(R.id.typeEau);
             Commune = itemView.findViewById(R.id.NomCommune);
+            itemView.setOnClickListener(this);
+
 
 
 
         }
+
+        @Override
+        public void onClick(View v) {
+            androidx.appcompat.app.AlertDialog.Builder pop = new AlertDialog.Builder(v.getContext());
+            pop.setTitle("Info point" );
+
+            pop.setMessage("Nom : " + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getId()
+                    + "\n Commmune"+pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getCommune()
+                    + " \n Departement : " + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getDepName()
+                    + "\n Type de point d'eau" + pointDEauArrayList.get(getAdapterPosition()).getRecords().get(getAdapterPosition()).getFields().getNature())
+            ;
+
+            pop.show();
+
+
+        }
+
+
+    }
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
+        boolean onItemLongClick(View view, int position);
     }
 }
 

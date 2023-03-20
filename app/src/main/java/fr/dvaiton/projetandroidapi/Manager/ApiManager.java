@@ -29,14 +29,12 @@ public class ApiManager {
     }
 
     private ApiManager() {
-
         createRetrofitEau();
     }
 
     private void createRetrofitEau() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        HashMap<String, String> headers = new HashMap<>();
 
         interceptor.level(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -47,7 +45,7 @@ public class ApiManager {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        eauService = retrofitEau.create(fr.dvaiton.projetandroidapi.service.eauService.class);
+        eauService = retrofitEau.create(eauService.class);
 
     }
 

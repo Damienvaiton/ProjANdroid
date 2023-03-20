@@ -6,18 +6,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.ArrayList;
 
+import fr.dvaiton.projetandroidapi.Manager.ApiManager;
+import fr.dvaiton.projetandroidapi.Manager.MainActivityController;
+import fr.dvaiton.projetandroidapi.Manager.PointDEauDataManagerCallback;
+import fr.dvaiton.projetandroidapi.Model.Fields;
 import fr.dvaiton.projetandroidapi.Model.PointDEau;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PointDEauDataManagerCallback {
 
 
+    ArrayList<PointDEau> listPoints;
 
-    ArrayList<PointDEau> pointDEauArrayList;
+    MainActivityController activityController;
 
     AdapterPerso adapter;
+
 
     RecyclerView recyclerView;
 
@@ -27,20 +34,51 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        pointDEauArrayList = new ArrayList<>();
 
+        activityController = new MainActivityController();
+
+        listPoints = new ArrayList<>();
+        adapter = new AdapterPerso(this,listPoints);
         recyclerView = findViewById(R.id.Vuedatas);
 
 
-        adapter = new AdapterPerso(this, pointDEauArrayList);
+
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+
+        activityController.loadEau(this);
+
 
         adapter.notifyDataSetChanged();
 
 
 
+
+
+
+    }
+
+
+    @Override
+    public void getTimeResponseSuccess(PointDEau pointdeau) {
+
+        Log.e("test",listPoints.size()+"");
+
+        listPoints.add(pointdeau);
+
+
+        Log.e("test",listPoints.size()+"");
+
+
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getTimeResponseError(String error) {
 
     }
 }

@@ -8,8 +8,8 @@ import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 
 public interface eauService {
-    @GET ("api/records/1.0/search")
-    Call<PointDEau> getPointDEau(@QueryMap Map<String, String> queryMap);
+    @GET ("api/records/1.0/search/?dataset=hydrographie-points-deau-en-france&start=0&rows=20")
+    Call<PointDEau> getPointDEau();
 
 
 

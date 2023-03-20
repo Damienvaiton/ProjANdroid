@@ -1,5 +1,6 @@
 package fr.dvaiton.projetandroidapi.Model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Array;
@@ -9,15 +10,24 @@ import java.util.ArrayList;
 public class PointDEau {
 
 
-    private ArrayList<Fields> fields;
+    @SerializedName("nhits")
+    @Expose
+    private int nbentrée;
 
-    public ArrayList<Fields> getFields() {
-        return fields;
+   private ArrayList<Records> records;
+
+    public ArrayList<Records> getRecords() {
+        return records;
     }
 
-    public void setFields(ArrayList<Fields> fields) {
-        this.fields = fields;
-    }
+
+
+
+
+
+
+
+
 
 
 

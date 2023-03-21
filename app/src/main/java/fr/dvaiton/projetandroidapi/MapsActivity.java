@@ -3,14 +3,20 @@ package fr.dvaiton.projetandroidapi;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
+import fr.dvaiton.projetandroidapi.Model.PointDEau;
 import fr.dvaiton.projetandroidapi.databinding.ActivityMapsBinding;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -18,12 +24,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
+    ArrayList<PointDEau> listPoints = new ArrayList<>();
+
+    PointDEau point2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+         point2 = (PointDEau) getIntent().getSerializableExtra("listPoints");
+
+
+
+
+
+
+
+
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -45,8 +67,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+     //   mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        for (int i = 0; i < point2.getRecords().size(); i++) {
+            LatLng point = new LatLng(point2.getRecords().get(i).getFields().getGeoShape().getLongitude(), point2.getRecords().get(i).getFields().getGeoShape().getLatitude());
+
+            String name = point2.getRecords().get(i).getFields().getNature();
+            Log.e("Point", point2.getRecords().get(i).getFields().getNature());
+            if (point2.getRecords().get(i).getFields().getNature().equals("Station de pompage")) {
+                mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+            } else if (point2.getRecords().get(i).getFields().getNature().equals("Autre point d'eau")) {
+
+                    mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+
+
+            } else if (point2.getRecords().get(i).getFields().getNature().equals("Citerne")) {
+
+                    mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+
+
+            } else if (point2.getRecords().get(i).getFields().getNature().equals("Source")) {
+
+                    mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+
+
+            } else if (point2.getRecords().get(i).getFields().getNature().equals("Fontaine")) {
+
+                    mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+
+
+            } else {
+                mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+
+            }
+
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(point));
+            }
+
+
+        }
+
+
     }
-}

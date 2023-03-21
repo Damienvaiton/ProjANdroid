@@ -42,7 +42,6 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
         holder.Nom.setText(pointDEauArrayList.get(position).getRecords().get(position).getFields().getCommune());
         holder.Type.setText(pointDEauArrayList.get(position).getRecords().get(position).getFields().getDepName());
         holder.Commune.setText(pointDEauArrayList.get(position).getRecords().get(position).getFields().getNature());
-        Log.e("de",""+pointDEauArrayList.size());
     }
 
     @Override

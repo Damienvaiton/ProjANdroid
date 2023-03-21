@@ -1,12 +1,18 @@
 package fr.dvaiton.projetandroidapi.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
 
 
-public class Fields {
+public class Fields implements Serializable {
 
 
     @SerializedName("code_insee")
@@ -26,6 +32,10 @@ public class Fields {
     private String commune;
     @SerializedName("nature")
     private String nature;
+
+
+
+
 
     public String getRegName() {
         return regName;
@@ -90,7 +100,6 @@ public class Fields {
     public void setCodeInsee(String codeInsee) {
         this.codeInsee = codeInsee;
     }
-
 
 
 

@@ -1,9 +1,16 @@
 package fr.dvaiton.projetandroidapi.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Records {
+import java.io.Serializable;
+
+public class Records implements Serializable {
 
     @SerializedName("datasetid")
     @Expose
@@ -14,6 +21,10 @@ public class Records {
     private String records;
 
     private Fields fields;
+
+
+
+
 
     public String getRecords() {
         return records;
@@ -27,6 +38,7 @@ public class Records {
     public CharSequence affiche(){
         return "ID: " +  fields.getId() + "\n Departement: " + fields.getDepName()  + fields.getCommune() + "\n Region "+fields.getRegName();
     }
+
 
 
 }

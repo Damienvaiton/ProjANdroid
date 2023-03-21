@@ -21,7 +21,9 @@ import fr.dvaiton.projetandroidapi.Model.PointDEau;
 public class MainActivity extends AppCompatActivity implements PointDEauDataManagerCallback {
 
 
-    public static int nbVaribale = 100;
+    public static int nbVaribale = 200;
+
+
 
     Button button;
 
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
         activityController = new MainActivityController();
 
+
+
         listPoints = new ArrayList<>();
         adapter = new AdapterPerso(this,listPoints);
         recyclerView = findViewById(R.id.Vuedatas);
@@ -59,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         activityController.loadEau(this);
 
 
+
+
+
         adapter.notifyDataSetChanged();
 
 
@@ -66,7 +73,17 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
         button.setOnClickListener(v -> {
             Intent maps = new Intent(MainActivity.this,MapsActivity.class);
+
+            maps.putExtra("listPoints",listPoints.get(0));
+
+            Log.e("sizearray",listPoints.get(0).getRecords().size()+"");
+
             startActivity(maps);
+
+
+
+
+
 
 
 
@@ -80,15 +97,7 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
     @Override
     public void getTimeResponseSuccess(PointDEau pointdeau) {
-
-        Log.e("test",listPoints.size()+"");
-
         listPoints.add(pointdeau);
-
-
-        Log.e("test",listPoints.size()+"");
-
-
 
         adapter.notifyDataSetChanged();
     }

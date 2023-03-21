@@ -13,9 +13,13 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
 
+import fr.dvaiton.projetandroidapi.Manager.CacheManager;
+import fr.dvaiton.projetandroidapi.Manager.ClusterMark;
+import fr.dvaiton.projetandroidapi.Manager.MapsController;
 import fr.dvaiton.projetandroidapi.Model.PointDEau;
 import fr.dvaiton.projetandroidapi.databinding.ActivityMapsBinding;
 
@@ -23,6 +27,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
+
+    private MapsController mapsController;
+
+    private ClusterManager<ClusterMark> ClusManager;
 
     ArrayList<PointDEau> listPoints = new ArrayList<>();
 
@@ -32,11 +40,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mapsController = new MapsController();
+
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
 
-         point2 = (PointDEau) getIntent().getSerializableExtra("listPoints");
+         point2 = mapsController.getPointDEau();
 
 
 
@@ -74,6 +84,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             String name = point2.getRecords().get(i).getFields().getNature();
             Log.e("Point", point2.getRecords().get(i).getFields().getNature());
+
+
             if (point2.getRecords().get(i).getFields().getNature().equals("Station de pompage")) {
                 mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
             } else if (point2.getRecords().get(i).getFields().getNature().equals("Autre point d'eau")) {
@@ -107,6 +119,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         }
+
+
+
+
 
 
     }

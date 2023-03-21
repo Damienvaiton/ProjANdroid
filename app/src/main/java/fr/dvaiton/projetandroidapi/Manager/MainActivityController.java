@@ -30,16 +30,18 @@ public MainActivityController (){
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("dataset", "hydrographie-points-deau-en-france");
         queryMap.put("rows", MainActivity.nbVaribale+"");
-        int start = i * MainActivity.nbVaribale;
-        queryMap.put("start", String.valueOf(start));
+        int starts = i * MainActivity.nbVaribale;
+        queryMap.put("start", String.valueOf(starts));
 
-    apimanager.getEauService().getPointDEau().enqueue(new Callback<PointDEau>() {
+    apimanager.getEauService().getPointDEau(15,100).enqueue(new Callback<PointDEau>() {
         @Override
         public void onResponse(Call<PointDEau> call, Response<PointDEau> response) {
             if (response.isSuccessful()) {
 
 
                PointDEau point = response.body();
+
+
 
                callback.getTimeResponseSuccess(point);
 

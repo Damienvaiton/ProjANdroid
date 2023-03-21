@@ -13,6 +13,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 import fr.dvaiton.projetandroidapi.Manager.ApiManager;
+import fr.dvaiton.projetandroidapi.Manager.CacheManager;
 import fr.dvaiton.projetandroidapi.Manager.MainActivityController;
 import fr.dvaiton.projetandroidapi.Manager.PointDEauDataManagerCallback;
 import fr.dvaiton.projetandroidapi.Model.Fields;
@@ -74,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         button.setOnClickListener(v -> {
             Intent maps = new Intent(MainActivity.this,MapsActivity.class);
 
-            maps.putExtra("listPoints",listPoints.get(0));
 
             Log.e("sizearray",listPoints.get(0).getRecords().size()+"");
 
@@ -98,6 +98,11 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
     @Override
     public void getTimeResponseSuccess(PointDEau pointdeau) {
         listPoints.add(pointdeau);
+        CacheManager cacheManager = CacheManager.getInstance();
+
+        cacheManager.setPointDEau(pointdeau);
+
+
 
         adapter.notifyDataSetChanged();
     }

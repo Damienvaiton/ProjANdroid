@@ -1,5 +1,6 @@
 package fr.dvaiton.projetandroidapi;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
 
     public static int nbVaribale = 200;
+
 
 
 
@@ -99,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
     public void getTimeResponseSuccess(PointDEau pointdeau) {
         listPoints.add(pointdeau);
         CacheManager cacheManager = CacheManager.getInstance();
-
         cacheManager.setPointDEau(pointdeau);
 
 
@@ -114,3 +115,5 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
 
 }
+
+

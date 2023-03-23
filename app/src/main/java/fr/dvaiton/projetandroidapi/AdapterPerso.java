@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -26,14 +27,17 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
 
 
 
+
     public AdapterPerso(Context context , ArrayList<PointDEau> pointDEauArrayList) {
         this.context = context;
         this.pointDEauArrayList = pointDEauArrayList;
+
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.pointeau, parent, false));
     }
 
@@ -57,6 +61,7 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
 
         TextView Nom,Type,Commune;
 

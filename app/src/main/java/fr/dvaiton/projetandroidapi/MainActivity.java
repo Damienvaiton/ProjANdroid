@@ -2,8 +2,10 @@ package fr.dvaiton.projetandroidapi;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -23,9 +25,10 @@ import fr.dvaiton.projetandroidapi.Model.PointDEau;
 public class MainActivity extends AppCompatActivity implements PointDEauDataManagerCallback {
 
 
-    public static int nbVaribale = 200;
+    public static int nbVaribale = 20;
 
 
+   private EndlessRecyclerViewScrollListener scrollListener;
 
 
     Button button;
@@ -49,6 +52,11 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         activityController = new MainActivityController();
 
 
+        CacheManager cacheManager = CacheManager.getInstance();
+
+        cacheManager.setCompte(1);
+
+
 
         listPoints = new ArrayList<>();
         adapter = new AdapterPerso(this,listPoints);
@@ -56,14 +64,15 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         button = findViewById(R.id.CarteButton);
 
 
+        LinearLayoutManager linearLayoutManagers = new LinearLayoutManager(this);
 
 
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(linearLayoutManagers);
         recyclerView.setAdapter(adapter);
 
 
-        activityController.loadEau(this);
+        activityController.loadEau(this,1);
 
 
 
@@ -92,6 +101,22 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         }
         );
 
+        scrollListener = new EndlessRecyclerViewScrollListener((linearLayoutManagers)) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.e("Error","Fin de la liste");
+                cacheManager.addCompte();
+                Log.e("Error",cacheManager.getCompte()+"");
+
+                activityController.loadEau(MainActivity.this, cacheManager.getCompte());
+            }
+        };
+
+        recyclerView.addOnScrollListener(scrollListener);
+
+
+
+
 
 
     }
@@ -106,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
 
         adapter.notifyDataSetChanged();
+        Log.e("Error","Fin de la requete");
     }
 
     @Override
@@ -115,5 +141,6 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
 
 }
+
 
 

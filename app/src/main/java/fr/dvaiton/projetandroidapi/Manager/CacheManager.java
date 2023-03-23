@@ -8,6 +8,8 @@ public class CacheManager {
 
     private PointDEau pointDEau;
 
+    private int compte = 0;
+
     private static CacheManager instance = null;
 
     private CacheManager() {
@@ -27,6 +29,18 @@ public class CacheManager {
 
     public void setPointDEau(PointDEau pointDEau) {
         this.pointDEau = pointDEau;
+    }
+
+    public int getCompte() {
+        return compte;
+    }
+
+    public void setCompte(int compte) {
+        this.compte = compte;
+    }
+
+    public void addCompte() {
+        this.compte++;
     }
 
 

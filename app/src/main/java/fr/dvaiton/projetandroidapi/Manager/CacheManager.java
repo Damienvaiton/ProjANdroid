@@ -8,7 +8,7 @@ public class CacheManager {
 
     private PointDEau pointDEau;
 
-    private int compte = 0;
+    private int compte = 1;
 
     private static CacheManager instance = null;
 

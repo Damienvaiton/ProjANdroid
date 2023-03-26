@@ -1,6 +1,7 @@
 package fr.dvaiton.projetandroidapi;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,10 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,13 +30,12 @@ import fr.dvaiton.projetandroidapi.Model.PointDEau;
 public class MainActivity extends AppCompatActivity implements PointDEauDataManagerCallback {
 
 
-    public static int nbVaribale = 20;
 
 
    private EndlessRecyclerViewScrollListener scrollListener;
 
 
-    Button button;
+    Button button,btncharge;
 
     ArrayList<PointDEau> listPoints;
 
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         adapter = new AdapterPerso(this,listPoints);
         recyclerView = findViewById(R.id.Vuedatas);
         button = findViewById(R.id.CarteButton);
-
+        btncharge = findViewById(R.id.charge);
 
         LinearLayoutManager linearLayoutManagers = new LinearLayoutManager(this);
 
@@ -72,7 +76,21 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         recyclerView.setAdapter(adapter);
 
 
-        activityController.loadEau(this,1);
+
+
+        if (isNetworkAvailable(getApplicationContext())) {
+            activityController.loadEau(this,1);
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Erreur de connexion");
+            builder.setMessage("Veuillez vérifier votre connexion internet");
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                dialog.dismiss();
+                finish();
+            });
+            builder.show();
+        }
+
 
 
 
@@ -101,24 +119,46 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         }
         );
 
+        btncharge.setOnClickListener(v -> {
+            cacheManager.addCompte();
+            Log.e("Errorcompte",cacheManager.getCompte()+"");
+            activityController.loadEau(MainActivity.this, cacheManager.getCompte());
+            Log.e("Error",listPoints.size()+"");
+
+
+
+
+        });
+
+/*
         scrollListener = new EndlessRecyclerViewScrollListener((linearLayoutManagers)) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Log.e("Error","Fin de la liste");
                 cacheManager.addCompte();
-                Log.e("Error",cacheManager.getCompte()+"");
+                Log.e("Errorcompte",cacheManager.getCompte()+"");
 
                 activityController.loadEau(MainActivity.this, cacheManager.getCompte());
+                adapter.notifyDataSetChanged();
             }
         };
+
 
         recyclerView.addOnScrollListener(scrollListener);
 
 
+*/
 
 
 
 
+
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 

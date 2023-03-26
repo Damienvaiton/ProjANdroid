@@ -26,14 +26,11 @@ public MainActivityController (){
         return apimanager;
     }
     public void loadEau(PointDEauDataManagerCallback callback,int start){
-    for (int i = 0; i < MainActivity.nbVaribale*start; i++) {
+    for (int i = 0; i < 20*start; i++) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("dataset", "hydrographie-points-deau-en-france");
-        queryMap.put("rows", MainActivity.nbVaribale+"");
-        int starts = i * MainActivity.nbVaribale;
-        queryMap.put("start", String.valueOf(starts));
 
-    apimanager.getEauService().getPointDEau(0,MainActivity.nbVaribale*start).enqueue(new Callback<PointDEau>() {
+    apimanager.getEauService().getPointDEau(start*20,20).enqueue(new Callback<PointDEau>() {
         @Override
         public void onResponse(Call<PointDEau> call, Response<PointDEau> response) {
             if (response.isSuccessful()) {

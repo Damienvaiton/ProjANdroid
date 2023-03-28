@@ -16,6 +16,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import fr.dvaiton.projetandroidapi.Manager.MainActivityController;
 import fr.dvaiton.projetandroidapi.Manager.PointDEauDataManagerCallback;
 import fr.dvaiton.projetandroidapi.Model.Fields;
 import fr.dvaiton.projetandroidapi.Model.PointDEau;
+import fr.dvaiton.projetandroidapi.Model.Records;
 
 public class MainActivity extends AppCompatActivity implements PointDEauDataManagerCallback {
 
@@ -37,11 +39,13 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
     Button button,btncharge;
 
-    ArrayList<PointDEau> listPoints;
+    PointDEau listPoints;
 
     MainActivityController activityController;
 
     AdapterPerso adapter;
+
+    Switch switchfav;
 
 
     RecyclerView recyclerView;
@@ -62,11 +66,11 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
 
 
-        listPoints = new ArrayList<>();
-        adapter = new AdapterPerso(this,listPoints);
+        listPoints = cacheManager.getPointDEau();
+        adapter = new AdapterPerso(this,listPoints.getRecords());
         recyclerView = findViewById(R.id.Vuedatas);
         button = findViewById(R.id.CarteButton);
-        btncharge = findViewById(R.id.charge);
+        switchfav = findViewById(R.id.switch1);
 
         LinearLayoutManager linearLayoutManagers = new LinearLayoutManager(this);
 
@@ -105,7 +109,9 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
             Intent maps = new Intent(MainActivity.this,MapsActivity.class);
 
 
-            Log.e("sizearray",listPoints.get(0).getRecords().size()+"");
+            Log.e("sizearray",listPoints.getRecords().size()+"");
+
+            maps.putExtra("isFavorite",switchfav.isChecked());
 
             startActivity(maps);
 
@@ -119,18 +125,9 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         }
         );
 
-        btncharge.setOnClickListener(v -> {
-            cacheManager.addCompte();
-            Log.e("Errorcompte",cacheManager.getCompte()+"");
-            activityController.loadEau(MainActivity.this, cacheManager.getCompte());
-            Log.e("Error",listPoints.size()+"");
 
 
 
-
-        });
-
-/*
         scrollListener = new EndlessRecyclerViewScrollListener((linearLayoutManagers)) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -139,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
                 Log.e("Errorcompte",cacheManager.getCompte()+"");
 
                 activityController.loadEau(MainActivity.this, cacheManager.getCompte());
-                adapter.notifyDataSetChanged();
             }
         };
 
@@ -147,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         recyclerView.addOnScrollListener(scrollListener);
 
 
-*/
+
 
 
 
@@ -164,9 +160,31 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
     @Override
     public void getTimeResponseSuccess(PointDEau pointdeau) {
-        listPoints.add(pointdeau);
+
         CacheManager cacheManager = CacheManager.getInstance();
-        cacheManager.setPointDEau(pointdeau);
+
+        PointDEau pointDEau = cacheManager.getPointDEau();
+
+
+
+        ArrayList<Records> records = pointdeau.getRecords();
+        ArrayList<Records> list =  listPoints.getRecords();
+        Log.e("Ajout",records.size()+"");
+
+        for (int i = 0 ; i<20; i++) {
+
+           Log.e("Ajout","Id:"+records.get(i).getFields().getId());
+            pointDEau.getRecords().add(records.get(i));
+        }
+
+
+        Log.e("Size",cacheManager.getPointDEau().getRecords().size()+"");
+
+
+
+
+
+
 
 
 

@@ -26,7 +26,6 @@ public MainActivityController (){
         return apimanager;
     }
     public void loadEau(PointDEauDataManagerCallback callback,int start){
-    for (int i = 0; i < 20*start; i++) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("dataset", "hydrographie-points-deau-en-france");
 
@@ -58,4 +57,4 @@ public MainActivityController (){
     });
     }
     }
-}
+

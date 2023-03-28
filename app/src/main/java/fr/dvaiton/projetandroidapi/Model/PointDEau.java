@@ -22,6 +22,11 @@ public class PointDEau implements Serializable {
 
    private ArrayList<Records> records;
 
+    public PointDEau() {
+        this.nbentrée = 0;
+        this.records = new ArrayList<>();
+    }
+
 
 
     public ArrayList<Records> getRecords() {

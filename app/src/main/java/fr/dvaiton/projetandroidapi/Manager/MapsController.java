@@ -15,4 +15,8 @@ public class MapsController {
         return CacheManager.getInstance().getPointDEau();
     }
 
+    public PointDEau getPointDEauFavorite(){
+        return CacheManager.getInstance().getPointDEauFavorite();
+    }
+
 }

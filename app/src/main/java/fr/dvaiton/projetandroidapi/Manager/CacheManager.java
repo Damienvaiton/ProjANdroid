@@ -8,12 +8,17 @@ public class CacheManager {
 
     private PointDEau pointDEau;
 
+    private PointDEau pointDEauFavorite;
+
     private int compte = 1;
 
     private static CacheManager instance = null;
 
     private CacheManager() {
+        pointDEau = new PointDEau();
+        pointDEauFavorite = new PointDEau();
     }
+
 
 
     public static CacheManager getInstance() {
@@ -29,6 +34,14 @@ public class CacheManager {
 
     public void setPointDEau(PointDEau pointDEau) {
         this.pointDEau = pointDEau;
+    }
+
+    public PointDEau getPointDEauFavorite() {
+        return pointDEauFavorite;
+    }
+
+    public void setPointDEauFavorite(PointDEau pointDEauFavorite) {
+        this.pointDEauFavorite = pointDEauFavorite;
     }
 
     public int getCompte() {

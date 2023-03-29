@@ -56,11 +56,10 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
         return pointDEauArrayList.size();
     }
 
-
-
-
-
-
+    public void setListePoints(ArrayList<Records> records) {
+        this.pointDEauArrayList = records;
+        notifyDataSetChanged();
+    }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{

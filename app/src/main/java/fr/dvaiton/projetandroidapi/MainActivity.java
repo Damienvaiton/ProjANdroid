@@ -156,6 +156,22 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         recyclerView.addOnScrollListener(scrollListener);
 
 
+        switchfav.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                CacheManager cacheManager1 = CacheManager.getInstance();
+                ArrayList<Records> records = cacheManager1.getPointDEauFavorite().getRecords();
+                adapter.setListePoints(records);
+
+
+            } else {
+                CacheManager cacheManager1 = CacheManager.getInstance();
+                ArrayList<Records> records = cacheManager1.getPointDEau().getRecords();
+                adapter.setListePoints(records);
+
+            }
+        });
+
+
 
 
 

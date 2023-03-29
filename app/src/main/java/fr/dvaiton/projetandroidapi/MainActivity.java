@@ -15,7 +15,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
     AdapterPerso adapter;
 
+    ImageView imageView;
+
     Switch switchfav;
 
 
@@ -54,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
 
 
@@ -71,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
         recyclerView = findViewById(R.id.Vuedatas);
         button = findViewById(R.id.CarteButton);
         switchfav = findViewById(R.id.switch1);
+        imageView = findViewById(R.id.ParamClick);
 
         LinearLayoutManager linearLayoutManagers = new LinearLayoutManager(this);
 
@@ -101,6 +108,12 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
 
         adapter.notifyDataSetChanged();
+
+
+        imageView.setOnClickListener(v -> {
+            Intent param = new Intent(MainActivity.this,ParamActivity.class);
+            startActivity(param);
+        });
 
 
 
@@ -168,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
 
         ArrayList<Records> records = pointdeau.getRecords();
-        ArrayList<Records> list =  listPoints.getRecords();
         Log.e("Ajout",records.size()+"");
 
         for (int i = 0 ; i<20; i++) {
@@ -179,14 +191,6 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
 
         Log.e("Size",cacheManager.getPointDEau().getRecords().size()+"");
-
-
-
-
-
-
-
-
 
         adapter.notifyDataSetChanged();
         Log.e("Error","Fin de la requete");

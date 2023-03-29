@@ -11,9 +11,13 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/icon_app"
         android:label="@string/app_name"
+
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetAndroidAPI"
         tools:targetApi="31">
+        <activity
+            android:name=".ParamActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />

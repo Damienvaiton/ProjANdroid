@@ -3,6 +3,7 @@ package fr.dvaiton.projetandroidapi;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -54,19 +56,45 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
     RecyclerView recyclerView;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        CacheManager cacheManager = CacheManager.getInstance();
+        Boolean dark = cacheManager.getDark();
+        if (dark) {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("dark",CacheManager.getInstance().getDark());
+        editor.apply();
+    }
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
         setContentView(R.layout.activity_main);
+
+
 
 
         activityController = new MainActivityController();
 
 
         CacheManager cacheManager = CacheManager.getInstance();
+
+
+
 
         cacheManager.setCompte(1);
 
@@ -137,6 +165,9 @@ public class MainActivity extends AppCompatActivity implements PointDEauDataMana
 
         }
         );
+
+
+
 
 
 

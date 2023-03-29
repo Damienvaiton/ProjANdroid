@@ -107,8 +107,31 @@ public class AdapterPerso extends RecyclerView.Adapter<AdapterPerso.MyViewHolder
         public boolean onLongClick(View v) {
             CacheManager cacheManager = CacheManager.getInstance();
             ArrayList<Records> list = cacheManager.getPointDEauFavorite().getRecords();
-            Toast.makeText(v.getContext(), "Ajouté aux favoris: " + pointDEauArrayList.get(getAdapterPosition()).getFields().getId(), Toast.LENGTH_SHORT).show();
-            list.add(pointDEauArrayList.get(getAdapterPosition()));
+
+           if (list.size() == 0) {
+                Toast.makeText(v.getContext(), "Ajouté aux favoris: " + pointDEauArrayList.get(getAdapterPosition()).getFields().getId(), Toast.LENGTH_SHORT).show();
+                list.add(pointDEauArrayList.get(getAdapterPosition()));
+            }
+            else {
+
+
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getFields().getId() == pointDEauArrayList.get(getAdapterPosition()).getFields().getId()) {
+                        Toast.makeText(v.getContext(), "Déjà dans les favoris", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                }
+                Toast.makeText(v.getContext(), "Ajouté aux favoris: " + pointDEauArrayList.get(getAdapterPosition()).getFields().getId(), Toast.LENGTH_SHORT).show();
+                list.add(pointDEauArrayList.get(getAdapterPosition()));
+
+
+
+
+
+           }
+
+
+
 
 
             Log.e("test", "onLongClick: " + list.size());

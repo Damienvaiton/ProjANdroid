@@ -1,7 +1,12 @@
 package fr.dvaiton.projetandroidapi;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -36,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     PointDEau point2;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,14 +51,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        boolean isFavorite = getIntent().getBooleanExtra("isFavorite",false);
+        boolean isFavorite = getIntent().getBooleanExtra("isFavorite", false);
 
-        if(isFavorite) {
+        if (isFavorite) {
             point2 = CacheManager.getInstance().getPointDEauFavorite();
 
         } else {
             point2 = CacheManager.getInstance().getPointDEau();
         }
+
 
 
 

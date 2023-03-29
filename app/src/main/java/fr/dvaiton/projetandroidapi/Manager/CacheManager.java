@@ -8,6 +8,8 @@ public class CacheManager {
 
     private PointDEau pointDEau;
 
+    private Boolean isDark = false;
+
     private PointDEau pointDEauFavorite;
 
     private int compte = 1;
@@ -55,6 +57,16 @@ public class CacheManager {
     public void addCompte() {
         this.compte++;
     }
+
+    public Boolean getDark() {
+        return isDark;
+    }
+
+    public void setDark(Boolean dark) {
+        isDark = dark;
+    }
+
+
 
 
 }

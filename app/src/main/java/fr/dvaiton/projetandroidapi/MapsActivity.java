@@ -1,10 +1,12 @@
 package fr.dvaiton.projetandroidapi;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -72,6 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -93,7 +96,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera
 
-     //   mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        //   mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         for (int i = 0; i < point2.getRecords().size(); i++) {
             LatLng point = new LatLng(point2.getRecords().get(i).getFields().getGeoShape().getLongitude(), point2.getRecords().get(i).getFields().getGeoShape().getLatitude());
 
@@ -105,22 +108,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
             } else if (point2.getRecords().get(i).getFields().getNature().equals("Autre point d'eau")) {
 
-                    mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
 
             } else if (point2.getRecords().get(i).getFields().getNature().equals("Citerne")) {
 
-                    mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
 
 
             } else if (point2.getRecords().get(i).getFields().getNature().equals("Source")) {
 
-                    mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
 
 
             } else if (point2.getRecords().get(i).getFields().getNature().equals("Fontaine")) {
 
-                    mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+                mMap.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
 
 
             } else {
@@ -128,16 +131,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
 
-
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(point));
-            }
+            getCurrentLocation();
 
 
         }
+    }
+
+
+        public void getCurrentLocation () {
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            LocationListener locationListener = new LocationListener() {
+                @Override
+                public void onLocationChanged(@NonNull Location location) {
+                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(latLng).title("Vous êtes ici").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    onMapReady(mMap);
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+            };
 
 
 
 
+
+    }
 
 
     }

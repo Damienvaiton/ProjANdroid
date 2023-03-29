@@ -38,7 +38,6 @@ public MainActivityController (){
                PointDEau point = response.body();
 
 
-
                callback.getTimeResponseSuccess(point);
 
 
